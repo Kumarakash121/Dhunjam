@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import GraphComponent from './GraphComponent';
 const Screen2 = () => {
   const [screen2Data, setScreen2Data] = useState(null);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  
   const [categoryValues, setCategoryValues] = useState({
     category_6: '',
     category_7: '',
@@ -15,7 +15,7 @@ const Screen2 = () => {
 
   const fetchData = async () => {
     try {
-      setIsButtonDisabled(true);
+      
       const response = await axios.get('https://stg.dhunjam.in/account/admin/4');
       if (response.status === 200) {
         setScreen2Data(response.data.data);
@@ -53,7 +53,7 @@ const Screen2 = () => {
 
   const handleUpdatePrices = async () => {
     try {
-      setIsButtonDisabled(true);
+      
       const response = await axios.put('https://stg.dhunjam.in/account/admin/4', {
         amount: categoryValues,
       });
@@ -64,9 +64,6 @@ const Screen2 = () => {
       }
     } catch (error) {
       console.error('Error updating prices:', error);
-    }finally {
-      
-      setIsButtonDisabled(false);
     }
   };
 
@@ -117,7 +114,7 @@ const Screen2 = () => {
           <br />
           <span>Regular song request amount from high to low-</span>
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_7"
@@ -125,7 +122,7 @@ const Screen2 = () => {
             onChange={handleInputChange}
           />
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_8"
@@ -133,7 +130,7 @@ const Screen2 = () => {
             onChange={handleInputChange}
           />
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_9"
@@ -141,7 +138,7 @@ const Screen2 = () => {
             onChange={handleInputChange}
           />
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_10"
@@ -164,7 +161,7 @@ const Screen2 = () => {
           <br />
           <span>Regular song request amount from high to low-</span>
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_7"
@@ -173,7 +170,7 @@ const Screen2 = () => {
             disabled
           />
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_8"
@@ -182,7 +179,7 @@ const Screen2 = () => {
             disabled
           />
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_9"
@@ -191,7 +188,7 @@ const Screen2 = () => {
             disabled
           />
           <input
-            style={{ width: 40 }}
+            style={{ width: 60 }}
             className='inp'
             type="text"
             name="category_10"
@@ -208,7 +205,7 @@ const Screen2 = () => {
 
       <button
         onClick={handleUpdatePrices}
-        disabled={isSaveDisabled() || isButtonDisabled || screen2Data.charge_customers }
+        disabled={isSaveDisabled() && screen2Data.charge_customers}
         style={{ width: 300 }}
         class='btn'
         className='btn btn-primary'

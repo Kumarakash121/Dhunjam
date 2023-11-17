@@ -19,10 +19,7 @@
   border-color: #F0C3F1;
   border-width: 1px;
 }
-.btn[disabled] {
-  background-color: #ccc; /* Gray out background color for disabled state */
-  cursor: not-allowed; /* Change cursor to not-allowed for disabled state */
-}
+
 .inp{
  
   background-color: #030303;
