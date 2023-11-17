@@ -1,6 +1,6 @@
 import React, { useState, useEffect ,useRef} from 'react';
 import axios from 'axios';
-import Chart from 'chart.js/auto';
+
 import GraphComponent from './GraphComponent';
 const Screen2 = () => {
   const [screen2Data, setScreen2Data] = useState(null);
@@ -66,7 +66,7 @@ const Screen2 = () => {
       console.error('Error updating prices:', error);
     }
   };
-
+console.log(screen2Data);
   return (
     <div className='Dash'>
       {screen2Data && (
@@ -212,7 +212,8 @@ const Screen2 = () => {
       >
         Save
       </button>
-    </div>
+      
+    </div> 
   );
 };
 

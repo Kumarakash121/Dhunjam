@@ -1,33 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-// import { useState } from 'react';
 
-// const HandleLogin = async () => {
-//     const [loggedIn, setLoggedIn] = useState(false);
-//     const [token, setToken] = useState('');
-//     try {
-//       const response = await fetch('https://stg.dhunjam.in/account/admin/login', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ username: 'DJ@4', password: 'Dhunjam@2023' })
-//       });
-
-//       const data = await response.json();
-//       if (response.ok) {
-//         setToken(data.data.token);
-//         setLoggedIn(true);
-//       } else {
-//         // Handle login failure
-//         console.error('Login failed:', data);
-//       }
-//     } catch (error) {
-//       console.error('Error during login:', error);
-//     }
-//   };
 const Login = () => {
     // const history=useHistory();
   const [formData, setFormData] = useState({
@@ -53,28 +28,23 @@ const Login = () => {
     const password = formData.password;
 
     try {
-      const response = await fetch('https://stg.dhunjam.in/account/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
-   
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Login successful. Token:', data.data.token);
-        // Perform actions after successful login, such as storing token in state, etc.
-        // history('/dashboard');
-      } else {
-        const errorData = await response.json();
-        console.error('Login failed:', errorData);
-        // Handle login failure (display error message, reset fields, etc.)
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-      // Handle other errors (network issues, etc.)
-    }
+        const response = await axios.post('https://stg.dhunjam.in/account/admin/login', {
+            username,
+            password
+          });
+        
+          if (response.status === 200) {
+            console.log('Login successful. Token:', response.data.data.token);
+            // Perform actions after successful login, such as storing token in state, etc.
+            // history('/dashboard');
+          } else {
+            console.error('Login failed:', response.data);
+            // Handle login failure (display error message, reset fields, etc.)
+          }
+        } catch (error) {
+          console.error('Error during login:', error);
+          // Handle other errors (network issues, etc.)
+        }
   };
   return (
     <div>
