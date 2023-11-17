@@ -1,10 +1,10 @@
-import React, { useState, useEffect ,useRef} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import GraphComponent from './GraphComponent';
+
 const Screen2 = () => {
   const [screen2Data, setScreen2Data] = useState(null);
-  
   const [categoryValues, setCategoryValues] = useState({
     category_6: '',
     category_7: '',
@@ -13,22 +13,21 @@ const Screen2 = () => {
     category_10: '',
   });
 
-  const fetchData = async () => {
-    try {
-      
-      const response = await axios.get('https://stg.dhunjam.in/account/admin/4');
-      if (response.status === 200) {
-        setScreen2Data(response.data.data);
-        setCategoryValues(response.data.data.amount);
-      } else {
-        throw new Error('Failed to fetch data');
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://stg.dhunjam.in/account/admin/4');
+        if (response.status === 200) {
+          setScreen2Data(response.data.data);
+          setCategoryValues(response.data.data.amount);
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
     fetchData();
   }, []);
 
@@ -53,12 +52,12 @@ const Screen2 = () => {
 
   const handleUpdatePrices = async () => {
     try {
-      
       const response = await axios.put('https://stg.dhunjam.in/account/admin/4', {
         amount: categoryValues,
       });
       if (response.status === 200) {
-        fetchData();
+        setScreen2Data(response.data.data);
+        setCategoryValues(response.data.data.amount);
       } else {
         throw new Error('Failed to update prices');
       }
@@ -66,14 +65,14 @@ const Screen2 = () => {
       console.error('Error updating prices:', error);
     }
   };
-console.log(screen2Data);
+  console.log(screen2Data)
   return (
     <div className='Dash'>
-      {screen2Data && (
+      {screen2Data  && (
         <>
           <span>
             <h1>
-              {screen2Data.name},{screen2Data.location} On Dhunjam
+              {screen2Data.name}, {screen2Data.location} On Dhunjam
             </h1>
           </span>
           <span style={{ padding: 20 }}>Do you want to charge your customers for requesting songs?</span>
@@ -100,7 +99,7 @@ console.log(screen2Data);
         </>
       )}
 
-      {screen2Data && screen2Data.charge_customers ? (
+      {(screen2Data ) ? (
         <div>
           <span>Custom song request amount-</span>
           <input
@@ -148,7 +147,7 @@ console.log(screen2Data);
         </div>
       ) : (
         <div>
-         <span>Custom song request amount-</span>
+          <span>Custom song request amount-</span>
           <input
             style={{ width: 200 }}
             className='inp'
@@ -196,24 +195,22 @@ console.log(screen2Data);
             onChange={handleInputChange}
             disabled
           />
-          </div>
+        </div>
       )}
 
       <br />
       <br />
-      {screen2Data && screen2Data.charge_customers && <GraphComponent chartData={categoryValues} />}
+      {(screen2Data ) && <GraphComponent chartData={categoryValues} />}
 
       <button
         onClick={handleUpdatePrices}
-        disabled={isSaveDisabled() && screen2Data.charge_customers}
+        disabled={isSaveDisabled() && screen2Data && screen2Data.charge_customers}
         style={{ width: 300 }}
-        class='btn'
         className='btn btn-primary'
       >
         Save
       </button>
-      
-    </div> 
+    </div>
   );
 };
 
