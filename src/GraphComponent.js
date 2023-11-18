@@ -8,7 +8,7 @@ function GraphComponent({ chartData }) {
     const ctx = canvasRef.current.getContext("2d");
 
     const data = {
-      labels: ["Custom", "Category 2", "Category 3", "Category 4", "Category 5"],
+      labels: ["Custom", "Category 7", "Category 8", "Category 9", "Category 10"],
       datasets: [
         {
           data: Object.values(chartData).map(Number),
